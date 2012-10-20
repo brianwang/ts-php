@@ -19,7 +19,7 @@ class Dispatcher {
                 require_once ($controllerfile);
                 $app = new $controller();
                 $app->setRouter($router);
-                call_user_func(array($app, $action), $params);
+                call_user_func_array(array($app, $action), $params);
                 $app->output();
             } catch (Exception $e) {
                 var_dump($e->getMessage());
