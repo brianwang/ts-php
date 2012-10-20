@@ -1,6 +1,6 @@
-<?php /* Smarty version Smarty-3.1.11, created on 2012-10-18 09:07:54
+<?php /* Smarty version Smarty-3.1.11, created on 2012-10-19 21:35:22
          compiled from "/home/brian/www/codesgist/app/views/header.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:19617792165080295aacb317-24878516%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:79394995350822a0a4d27e4-27352843%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
@@ -11,15 +11,15 @@ $_valid = $_smarty_tpl->decodeProperties(array (
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '19617792165080295aacb317-24878516',
+  'nocache_hash' => '79394995350822a0a4d27e4-27352843',
   'function' => 
   array (
   ),
   'has_nocache_code' => false,
   'version' => 'Smarty-3.1.11',
-  'unifunc' => 'content_5080295ab37876_48147333',
+  'unifunc' => 'content_50822a0a537ee8_52997852',
 ),false); /*/%%SmartyHeaderCode%%*/?>
-<?php if ($_valid && !is_callable('content_5080295ab37876_48147333')) {function content_5080295ab37876_48147333($_smarty_tpl) {?><div style="height:50px;" id="header">
+<?php if ($_valid && !is_callable('content_50822a0a537ee8_52997852')) {function content_50822a0a537ee8_52997852($_smarty_tpl) {?><div style="height:50px;" id="header">
     <h2>CodesGist-您的在线代码助手</h2>
 </div>
 <div class="row">

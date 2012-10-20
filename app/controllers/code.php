@@ -18,7 +18,10 @@ class code extends Controller {
         if ($id == NULL) {
             $this->output->show404();
         } else {
-            $this->code_m->get($id);
+            $code =$this->code_m->get($id);
+            $this->data['url'] =$id;
+            $this->data['code'] = $code;
+            $this->viewfile = 'viewcode.tpl';
         }
     }
 
@@ -30,17 +33,23 @@ class code extends Controller {
     function save() {
         $title = $_POST['description'];
         $content = $_POST['code'];
+        $user = $_POST['guestname'];
         $ip = $_SERVER['REMOTE_ADDR'];
-        $id = md5($title . $content . $ip);
-        $last = $_SESSION['lastupload'];
-        //if last upload is same with the current.
+        $id = md5($title . $content . $ip.$user);
+        $last = '';
+        if (array_key_exists('lastupload', $_SESSION)) {
+            $last = $_SESSION['lastupload'];
+        }
         if ($id == $last) {
-            $this->output->json(__('You have submitted!'));
+            $this->output->json(__('You have submitted!'), '', 500);
         } else {
             $post = $this->input->post();
             $post['_id'] = $id;
+            $post['ip'] = $ip;
             $this->code_m->save($post);
             $_SESSION['lastupload'] = $id;
+            $url = site_url('/code/'.$id);
+            $this->output->json(array('url'=>$url),__('Success'));
         }
     }
 

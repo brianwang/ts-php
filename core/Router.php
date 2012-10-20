@@ -19,17 +19,40 @@ class Router {
             $keys = array_keys($_POST); //get form variables
         }
         $this->uri = $this->_detect_uri();
-        if($this->uri=='/')
-        {
-            $this->controller = config::get('default_controller');
-            $this->action = config::get('default_action');
+        $configpath = Config::get('config_path');
+        $routefile = BASE_PATH . DIRECTORY_SEPARATOR . $configpath . DIRECTORY_SEPARATOR . 'router.php';
+        if (file_exists($routefile)) {
+            //Get the router array;
+            include $routefile;
+        } else {
+            die(__('You config file is not exists'));
         }
-        else{
-            $this->segments=  explode('/',$this->uri);
-            $this->controller=$this->segments[0];
-            $this->action=empty($this->segments[1])?'index':$this->segments[1];
-            if(sizeof($this->segments) > 2)
-            {
+        /*
+         * from top to end matching
+         */
+        foreach ($router as $key => $value) {
+            //format url
+            $key = str_replace('/', "\/", $key);
+            $result= preg_match('/' . $key . '/', $this->uri, $match);
+            //var_dump($result);
+            //var_dump($this->uri);
+            if (preg_match('/' . $key . '/', $this->uri, $match) == 1) {
+                for ($i = 0; $i < count($match); $i++) {
+                    $value = str_replace("$" . $i, $match[$i], $value);
+                }
+                $this->uri = $value;
+                break;
+            }
+        }
+
+        if ($this->uri == '/') {
+            $this->controller = Config::get('default_controller');
+            $this->action = Config::get('default_action');
+        } else {
+            $this->segments = explode('/', $this->uri);
+            $this->controller = $this->segments[0];
+            $this->action = empty($this->segments[1]) ? 'index' : $this->segments[1];
+            if (sizeof($this->segments) > 2) {
                 $this->params = array_slice($this->segments, 2);
             }
         }
@@ -101,6 +124,7 @@ class Router {
     public function getController() {
         return $this->controller;
     }
+
     public function getParams() {
         return $this->params;
     }

@@ -1,27 +1,70 @@
-<!DOCTYPE html>
+<?php /* Smarty version Smarty-3.1.11, created on 2012-10-19 21:35:22
+         compiled from "/home/brian/www/codesgist/app/views/viewcode.tpl" */ ?>
+<?php /*%%SmartyHeaderCode:202170393550822a0a2b6804-56745081%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+$_valid = $_smarty_tpl->decodeProperties(array (
+  'file_dependency' => 
+  array (
+    '01de7d29c393e926d8cd43dd87bb5a399da82b75' => 
+    array (
+      0 => '/home/brian/www/codesgist/app/views/viewcode.tpl',
+      1 => 1350707408,
+      2 => 'file',
+    ),
+    'c3b8e6dd64b6f3a062ec82ee567200b4738ecc3e' => 
+    array (
+      0 => '/home/brian/www/codesgist/app/views/layout.tpl',
+      1 => 1350701734,
+      2 => 'file',
+    ),
+  ),
+  'nocache_hash' => '202170393550822a0a2b6804-56745081',
+  'function' => 
+  array (
+  ),
+  'has_nocache_code' => false,
+  'version' => 'Smarty-3.1.11',
+  'unifunc' => 'content_50822a0a4c78a9_34189743',
+),false); /*/%%SmartyHeaderCode%%*/?>
+<?php if ($_valid && !is_callable('content_50822a0a4c78a9_34189743')) {function content_50822a0a4c78a9_34189743($_smarty_tpl) {?><!DOCTYPE html>
 <html>
     <head>
-        <title>{block name=title}{/block}</title>
+        <title>Code</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="description" content="">
         <meta name="author" content="">
         <meta name="viewport" content="width=device-width,initial-scale=1">
-        <LINK REL="icon" type="image/gif" href="{assert_url('/si.gif')}">
-        <link rel="stylesheet" href="{assert_url('/css/bootstrap.css')}">
-        <link rel="stylesheet" href="{assert_url('/css/bootstrap-notify.css')}">
-        <link rel="stylesheet" href="{assert_url('/css/Style.css')}">
-        <script src="{assert_url('/js/jquery1.7.js')}" type="text/javascript"></script>
-        <script src="{assert_url('/js/jquery.form.js')}" type="text/javascript"></script>
-        <script src="{assert_url('/js/jquery.tmpl.js')}" type="text/javascript"></script>
+        <LINK REL="icon" type="image/gif" href="<?php echo assert_url('/si.gif');?>
+">
+        <link rel="stylesheet" href="<?php echo assert_url('/css/bootstrap.css');?>
+">
+        <link rel="stylesheet" href="<?php echo assert_url('/css/bootstrap-notify.css');?>
+">
+        <link rel="stylesheet" href="<?php echo assert_url('/css/Style.css');?>
+">
+        <script src="<?php echo assert_url('/js/jquery1.7.js');?>
+" type="text/javascript"></script>
+        <script src="<?php echo assert_url('/js/jquery.form.js');?>
+" type="text/javascript"></script>
+        <script src="<?php echo assert_url('/js/jquery.tmpl.js');?>
+" type="text/javascript"></script>
 
-        {block name=css}{/block}
+        
     </head>
     <body>
         <div class="container">
-            {* The header file with the main logo and stuff  *}
-            {include file='header.tpl'}
-            {block name=body}{/block}
-            {include file='footer.tpl'}
+            
+            <?php echo $_smarty_tpl->getSubTemplate ('header.tpl', $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, null, null, array(), 0);?>
+
+            
+<div class="row">
+    <div><?php echo $_smarty_tpl->tpl_vars['url']->value;?>
+</div>
+    <div><?php echo $_smarty_tpl->tpl_vars['code']->value;?>
+</div>
+</div>
+
+            <?php echo $_smarty_tpl->getSubTemplate ('footer.tpl', $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, null, null, array(), 0);?>
+
         </div>
         <div class="progress progress-striped active hide" id="loading" 
              style="position:fixed;top:45%; left:45%;width: 200px; z-index:2000;">
@@ -35,7 +78,7 @@
         </div>
         <div class='notifications top-right'></div>
         <script>
-            {literal}
+            
                  $(function(){
                      $.ajaxSetup({
                             error: function(jqXHR, exception) {
@@ -63,9 +106,9 @@
                                     $('#notify').fadeIn().fadeOut(2500);
                             }
             });
-            {/literal}
-            {block name=script}{/block}
-            {literal}
+            
+            
+            
                  
                 }).ajaxStart(function(){$('#loading').show();})
                   .ajaxStop(function(){$('#loading').delay(5000).hide();})
@@ -78,8 +121,8 @@
                                 }
                             }
 );
-            {/literal}
+            
         
         </script>
     </body>
-</html>
+</html><?php }} ?>

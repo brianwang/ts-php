@@ -1,16 +1,20 @@
 {extends file="layout.tpl"}
 {block name=title}首页{/block}
 {block name=script}{literal}
-$(function(){
     $('#btn-savecode').click(function(){
-        $('#frm-code').ajaxSubmit();
+        $('#frm-code').ajaxSubmit({
+            success:function(data,xhr,option){
+                var lik = "<a href='"+data.result.url+"'>"+data.result.url+"</a>";
+                $('#url').html(lik);
+            }
+        });
     });
-});
 {/literal}{/block}
 {block name=body}
 <div class="row" id="content">
     <div class="row-fluid">
         <div class="span7">
+            <div id="url"></div>
             <form action="{site_url('/code/save')}" method="POST" id="frm-code">
                 <input type="text" name="description" placeholder="描述" style="width:500px;">
                 <textarea name="code" rows="14" style="width:500px;" placeholder="您的代码 "></textarea>

@@ -29,10 +29,10 @@ class ViewEngine {
         return $inst;
     }
 
-    public function render($filename) {
+    public function render($filename,$data) {
         ob_start();
         if ($this->tmplengine != NULL) {
-            $this->tmplengine->render($filename);
+            $this->tmplengine->render($filename,$data);
         } else {
             include $filename;
         }
