@@ -18,6 +18,7 @@ if (!defined('BASEPATH'))
  * Thanks to Kyle Dye (kyledye.com), Nick Jackson (nickjackson.me), Mikhail Kozlov (mikhailkozlov.com) and Phil Sturgeon (philsturgeon.co.uk) for additional help
  */
 class Mongo_db {
+
     private $connection;
     private $db;
     private $connection_string;
@@ -51,13 +52,14 @@ class Mongo_db {
         $this->connection_string();
         $this->connect();
     }
-    
-    public static function create(){
+
+    public static function create() {
         static $inst = NULL;
-        if($inst == NULL)
+        if ($inst == NULL)
             $inst = new Mongo_db();
         return $inst;
     }
+
     /**
      * 	--------------------------------------------------------------------------------
      * 	//! Switch database
@@ -423,16 +425,16 @@ class Mongo_db {
         return ($this);
     }
 
-    public function search($collection,$text = "", $field = array(), $flag = "su") {
-        
+    public function search($collection, $text = "", $field = array(), $flag = "su") {
+
         $regexObj = new MongoRegex("/$text/$flag");
         $query = array();
         foreach ($field as $re) {
-            array_push($query,array($re => $regexObj));
+            array_push($query, array($re => $regexObj));
         }
         $where = array('$or' => $query);
         $documents = $this->db->{$collection}->find($where);
-        
+
         $this->_clear();
         $returns = array();
 
@@ -1014,6 +1016,17 @@ class Mongo_db {
         } catch (MongoCursorException $e) {
             show_error("MongoDB command failed to execute: {$e->getMessage()}", 500);
         }
+    }
+
+    public function group($collection,$keys=array(), $initial, $reduce){
+        $result =NULL;
+        try{ 
+            $result= $this->db->{$collection}->group($keys, $initial, $reduce);
+        } catch (MongoCursorException $e) {
+            show_error("MongoDB command failed to execute: {$e->getMessage()}", 500);
+        }
+         return $result['retval'];
+         
     }
 
     /**

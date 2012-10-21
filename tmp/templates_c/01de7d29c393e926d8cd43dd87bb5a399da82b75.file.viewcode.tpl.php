@@ -1,13 +1,13 @@
-<?php /* Smarty version Smarty-3.1.11, created on 2012-10-19 21:35:22
+<?php /* Smarty version Smarty-3.1.11, created on 2012-10-20 23:28:23
          compiled from "/home/brian/www/codesgist/app/views/viewcode.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:202170393550822a0a2b6804-56745081%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:162987290250839607294ef3-62032348%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '01de7d29c393e926d8cd43dd87bb5a399da82b75' => 
     array (
       0 => '/home/brian/www/codesgist/app/views/viewcode.tpl',
-      1 => 1350707408,
+      1 => 1350743073,
       2 => 'file',
     ),
     'c3b8e6dd64b6f3a062ec82ee567200b4738ecc3e' => 
@@ -17,15 +17,15 @@ $_valid = $_smarty_tpl->decodeProperties(array (
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '202170393550822a0a2b6804-56745081',
+  'nocache_hash' => '162987290250839607294ef3-62032348',
   'function' => 
   array (
   ),
   'has_nocache_code' => false,
   'version' => 'Smarty-3.1.11',
-  'unifunc' => 'content_50822a0a4c78a9_34189743',
+  'unifunc' => 'content_5083960754c8f6_12859225',
 ),false); /*/%%SmartyHeaderCode%%*/?>
-<?php if ($_valid && !is_callable('content_50822a0a4c78a9_34189743')) {function content_50822a0a4c78a9_34189743($_smarty_tpl) {?><!DOCTYPE html>
+<?php if ($_valid && !is_callable('content_5083960754c8f6_12859225')) {function content_5083960754c8f6_12859225($_smarty_tpl) {?><!DOCTYPE html>
 <html>
     <head>
         <title>Code</title>
@@ -57,10 +57,17 @@ $_valid = $_smarty_tpl->decodeProperties(array (
 
             
 <div class="row">
-    <div><?php echo $_smarty_tpl->tpl_vars['url']->value;?>
-</div>
-    <div><?php echo $_smarty_tpl->tpl_vars['code']->value;?>
-</div>
+    <div><a href="<?php echo $_smarty_tpl->tpl_vars['url']->value;?>
+"><?php echo $_smarty_tpl->tpl_vars['url']->value;?>
+</a></div>
+    <h2><?php echo $_smarty_tpl->tpl_vars['code']->value['code'];?>
+</h2>
+    <p>
+    <pre><code>
+            <?php echo $_smarty_tpl->tpl_vars['code']->value['description'];?>
+
+    </code></pre>
+</p>
 </div>
 
             <?php echo $_smarty_tpl->getSubTemplate ('footer.tpl', $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, null, null, array(), 0);?>

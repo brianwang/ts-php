@@ -49,8 +49,9 @@ class I18n {
         if ($lang == NULL) {
             $lang = $this->default_lang;
         }
-        if (array_key_exists($text, $this->_lang[$lang])) {
-            return $this->_lang[$lang][$text];
+        $t = strtolower($text);
+        if (array_key_exists($t, $this->_lang[$lang])) { 
+            return $this->_lang[$lang][$t];
         } else {
             return $text;
         }

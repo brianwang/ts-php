@@ -11,21 +11,35 @@
  * @author brian
  */
 class pages extends Controller {
+
     //put your code here
-    
-    function index(){
-        $this->viewfile='index.tpl';
-        //$this->view->render('index.php');
+
+    function index() {
+        $count = $this->code_m->count();
+        $usercount = $this->users_m->count();
+        $useronline = $this->users_m->onlinecount();
+        $this->data['codecount'] = $count;
+        $this->data['usercount'] = $usercount;
+        $this->data['useronline'] = $useronline;
+        $this->data['codes'] = $this->code_m->getlatest();
+        $this->data['tags'] = $this->code_m->gettags();
+        $this->data['greatcodes'] = $this->code_m->getgreat();
+        $this->data['langs'] = Memcache::create()->get('langs');
+        $this->viewfile = 'index.tpl';
     }
-    function code(){
-        $this->viewfile='code.tpl';
+
+    function code() {
+        $this->viewfile = 'code.tpl';
     }
-    function api(){
-        $this->viewfile='api.tpl';
+
+    function api() {
+        $this->viewfile = 'api.tpl';
     }
-     function help(){
-        $this->viewfile='help.tpl';
+
+    function help() {
+        $this->viewfile = 'help.tpl';
     }
+
 }
 
 ?>

@@ -4,7 +4,7 @@ require_once dirname(__FILE__) . '/View.php';
 
 class Controller {
     protected $ve;
-    protected $viewfile;
+    protected $viewfile="";
     protected $router;
     protected $data = array();
     /*

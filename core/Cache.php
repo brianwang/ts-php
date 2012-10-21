@@ -4,10 +4,9 @@
  *
  * @author brian
  */
-class Cache {
-    public static function get($id) {
-        return '';
-    }
+interface Cache {
+    public function get($name);
+    public function save($name,$value,$ttl);
 
 }
 

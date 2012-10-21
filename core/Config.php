@@ -21,6 +21,16 @@ class Config {
         return $inst;
     }
 
+    public function load($configname) {
+        $file =CONFIG_PATH . DIRECTORY_SEPARATOR . $configname . '.php';
+        if (defined('CONFIG_PATH') && file_exists($file)) {
+            return $file;
+        }
+        else{
+            die('Your config file' . $file .' is not exists');
+        }
+    }
+
     public static function get($name) {
         return Config::create()->ini_array[$name];
     }
@@ -29,10 +39,12 @@ class Config {
         $db_array = Config::create()->ini_array['DB'];
         return $db_array;
     }
-   public static function Mongo($name) {
-        $db_array =Config::create()->ini_array['Mongo'];
+
+    public static function Mongo($name) {
+        $db_array = Config::create()->ini_array['Mongo'];
         return $db_array[$name];
     }
+
     public static function getTimezone() {
         $tz_array = Config::create()->ini_array['Time_Zone'];
         return $tz_array['timezone'];

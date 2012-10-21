@@ -33,7 +33,7 @@ class Router {
         foreach ($router as $key => $value) {
             //format url
             $key = str_replace('/', "\/", $key);
-            $result= preg_match('/' . $key . '/', $this->uri, $match);
+            $result = preg_match('/' . $key . '/', $this->uri, $match);
             //var_dump($result);
             //var_dump($this->uri);
             if (preg_match('/' . $key . '/', $this->uri, $match) == 1) {
@@ -126,6 +126,8 @@ class Router {
     }
 
     public function getParams() {
+        if ($this->params == NULL)
+            $this->params = array();
         return $this->params;
     }
 

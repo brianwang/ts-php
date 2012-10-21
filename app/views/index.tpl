@@ -22,11 +22,9 @@
                 <div class="control-group ">
                     <label class="control-label help-inline">{__('language')}:</label>
                     <select name="language">
-                        <option>TEXT</option>
-                        <option>PHP</option>
-                        <option>JAVASCRIPT</option>
-                        <option>C++</option>
-                        <option>JAVA</option>
+                        {foreach $langs as $lang}
+                        <option>{$lang}</option>
+                        {/foreach}
                     </select>
                     </div>
                     <div class="control-group">
@@ -60,17 +58,17 @@
             </div>
             <form action="/user/login">
                 <div class="control-group" style="margin-top:15px;">
-                    <input type="text" name="username" placeholder="UserName">
-                    <input type="password" name="password" placeholder="Password">
+                    <input type="text" name="username" placeholder="{__('Username')}">
+                    <input type="password" name="password" placeholder="{__('Password')}">
                 </div>
                 <div class="control-group">
                     <button class="btn btn-primary">登录</button>
                     <button class="btn btn-info">忘记密码</button>
                 </div>
             </form>
-            <h2>1000段代码</h2>
-            <h2>500个注册用户</h2>
-            <h2>400人在线</h2>
+            <h2>{$codecount}段代码</h2>
+            <h2>{$usercount}个注册用户</h2>
+            <h2>{$useronline}人在线</h2>
         </div>
     </div>
 </div>
@@ -78,32 +76,29 @@
 <div class="row">
     <div class="row-fluid">
         <div class="span4">
-            <h2>最新更新的代码</h2>
+            <h2>{__('Latest')}</h2>
+            {foreach from=$codes item=c}
             <div>
-                <a href="#">123213123</a>
-                <a href="#">C++</a>
-                <a href="#">用户1</a>
+                {$c.createtime|date_format}
+                <a href="{site_url('/code/get/')}{$c._id}">{$c.description}</a>
             </div>
-             <div>
-                <a href="#">123213123</a>
-                <a href="#">C++</a>
-                <a href="#">用户1</a>
-            </div>
+            {/foreach}
         </div>
         <div class="span4">
-            <h2> 代码分类</h2>
+            <h2> {__('Category')}</h2>
             <ul class="nav nav-pills" style="font-size:24px;">
-                <li><a href="#">C++(40)</a></li>
-                <li><a href="#">C++(50)</a></li>
+                 {foreach from=$tags item=t}
+                    <li><a href="{site_url('/code/tag/')}{$t.language}">{$t.language}({$t.count})</a></li>
+                {/foreach}
             </ul>
         </div>
         <div class="span4">
-            <h2>评分最高的代码</h2>
+            <h2>{__('Top')}</h2>
+             {foreach from=$greatcodes item=c}
             <div>
-                <a href="#">123123</a>
-                <a href="#">C++</a>
-                <a href="#">用户1</a>
+                <a href="{site_url('code/get')}{$c._id}">{$c.description}</a>
             </div>
+             {/foreach}
         </div>
     </div>
 </div>

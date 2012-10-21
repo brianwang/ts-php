@@ -18,11 +18,17 @@ class code extends Controller {
         if ($id == NULL) {
             $this->output->show404();
         } else {
-            $code =$this->code_m->get($id);
-            $this->data['url'] =$id;
+            $code = $this->code_m->get($id);
+            $this->data['url'] = $id;
             $this->data['code'] = $code;
+
             $this->viewfile = 'viewcode.tpl';
         }
+    }
+
+    function tag($tag = '') {
+        $this->data['codes']=$this->code_m->getbytag($tag);
+        $this->viewfile='result.tpl';
     }
 
     /*
@@ -35,7 +41,7 @@ class code extends Controller {
         $content = $_POST['code'];
         $user = $_POST['guestname'];
         $ip = $_SERVER['REMOTE_ADDR'];
-        $id = md5($title . $content . $ip.$user);
+        $id = md5($title . $content . $ip . $user);
         $last = '';
         if (array_key_exists('lastupload', $_SESSION)) {
             $last = $_SESSION['lastupload'];
@@ -46,10 +52,11 @@ class code extends Controller {
             $post = $this->input->post();
             $post['_id'] = $id;
             $post['ip'] = $ip;
+            $post['createtime'] = time();
             $this->code_m->save($post);
             $_SESSION['lastupload'] = $id;
-            $url = site_url('/code/'.$id);
-            $this->output->json(array('url'=>$url),__('Success'));
+            $url = site_url('/code/get/' . $id);
+            $this->output->json(array('url' => $url), __('Success'));
         }
     }
 

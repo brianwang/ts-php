@@ -43,6 +43,9 @@ class ExtModel extends Model {
         $this->mongo->update($this->modelname, $data);
     }
 
+    function count(){
+        return $this->mongo->count($this->modelname);
+    }
     function delete($id) {
         $this->mongo->where(array('_id' => $id))->delete($this->modelname);
     }
