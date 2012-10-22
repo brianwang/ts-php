@@ -15,6 +15,22 @@ function getDirectoryFromDir($dir) {
     return $dir_array;
 }
 
+function getFilesFromDir($dir) {
+    $dir_array = array();
+    if ($handle = opendir($dir)) {
+        while (false !== ($file = readdir($handle))) {
+            if ($file != "." && $file != "..") {
+                if (is_file($dir . '/' . $file)) {
+                    $dir_array[] = $file;
+                }
+            }
+        }
+        closedir($handle);
+    }
+    return $dir_array;
+}
+
+
 $include_path = BASE_PATH . '/core';
 $include_path .=PATH_SEPARATOR . BASE_PATH . "/core/filters";
 $include_path .=PATH_SEPARATOR . BASE_PATH . "/core/cache";
@@ -48,9 +64,14 @@ spl_autoload_register(function ($object) {
         });
 include_once SYS_PATH . '/Common.php';
 require_once SYS_PATH . '/I18n.php';
-require_once SYS_PATH . '/helpers/url_helper.php';
-require_once SYS_PATH . '/helpers/output_helper.php';
-require_once SYS_PATH . '/helpers/i18n_helper.php';
+$dir_array = getFilesFromDir(SYS_PATH . '/helpers');
+foreach ($dir_array as $dir) {
+    require_once SYS_PATH . '/helpers/' . $dir;
+}
+//require_once SYS_PATH . '/helpers/url_helper.php';
+//require_once SYS_PATH . '/helpers/cache_helper.php';
+//require_once SYS_PATH . '/helpers/output_helper.php';
+//require_once SYS_PATH . '/helpers/i18n_helper.php';
 
 //set time zone
 date_default_timezone_set(Config::getTimezone());

@@ -29,6 +29,7 @@ class pages extends Controller {
     }
 
     function code() {
+        $this->data['codes'] =$this->code_m->get_all();
         $this->viewfile = 'code.tpl';
     }
 

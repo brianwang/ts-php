@@ -171,7 +171,7 @@
             <h2>{__('Top')}</h2>
             {foreach from=$greatcodes item=c}
                 <div style="margin-bottom: 10px;line-height: 24px;">
-                    <a href="{site_url('code/get')}{$c._id}">{$c.description}</a>
+                    <a href="{site_url('/code/get')}{$c._id}">{$c.description}</a>
                     <span style="float:right">{$c.createtime|date_format:"%Y-%m-%d"}</span>
                 </div>
             {/foreach}

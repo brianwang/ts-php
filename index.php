@@ -2,7 +2,6 @@
 
 define('BASE_PATH', dirname(__FILE__));
 define('BASEPATH', BASE_PATH);
-
 define('APP_PATH', BASE_PATH . '/app');
 define('LANG_PATH', BASE_PATH . '/lang');
 define('SYS_PATH', BASE_PATH . '/core');

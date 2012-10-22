@@ -26,7 +26,7 @@ class Memcache implements Cache {
     }
 
     public static function create() {
-        static $inst;
+        static $inst=NULL;
         if ($inst == NULL)
             $inst = new Memcache();
         return $inst;
