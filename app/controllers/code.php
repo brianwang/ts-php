@@ -31,6 +31,18 @@ class code extends Controller {
         $this->viewfile='result.tpl';
     }
 
+    function vote(){
+        if(empty($_POST['id'])){
+            $this->output->error(__('Vote Error'));
+        }
+        else{
+            $value = intval(substr($_POST['value'],5));
+            $this->output->success(array('avg'=>$value,
+                'number_votes'=>3,
+                'dec_avg'=>4),__('vote success'));
+        }
+        
+    }
     /*
      * 
      * Save your code here

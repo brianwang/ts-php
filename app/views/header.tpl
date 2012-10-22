@@ -1,5 +1,5 @@
 <div style="height:50px;" id="header">
-    <h2>CodesGist-您的在线代码助手</h2>
+    <h2>Codesgist-您的在线代码助手</h2>
 </div>
 <div class="row">
     <div id="main-header">

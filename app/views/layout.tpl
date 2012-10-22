@@ -13,6 +13,9 @@
         <script src="{assert_url('/js/jquery1.7.js')}" type="text/javascript"></script>
         <script src="{assert_url('/js/jquery.form.js')}" type="text/javascript"></script>
         <script src="{assert_url('/js/jquery.tmpl.js')}" type="text/javascript"></script>
+        <script src="{assert_url('/js/bootstrap.js')}" type="text/javascript"></script>
+        <script src="{assert_url('/js/bootstrap-modal.js')}" type="text/javascript"></script>
+        <script src="{assert_url('/js/bootstrap-tab.js')}" type="text/javascript"></script>
 
         {block name=css}{/block}
     </head>
@@ -71,8 +74,9 @@
                   .ajaxStop(function(){$('#loading').delay(5000).hide();})
                   .ajaxSuccess(function(event,xhr,option){
                                 $('#loading').delay(5000).hide();
-                                if(event != undefined && event.result !=undefined){
-                                    $('#notify-content').text(event.message);
+                                var e = JSON.parse(xhr.responseText);
+                                if(e != undefined && e.result !=undefined){
+                                    $('#notify-content').text(e.message);
                                     $('.alert-message').addClass('success');
                                     $('#notify').fadeIn().fadeOut(1500);
                                 }

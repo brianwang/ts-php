@@ -8,17 +8,20 @@ class Response {
         set_status_header($status);
         if (Request::create()->is_ajax()) {
             header('Content-Type:application/json');
-            $d = array('result' => $result, 
-                'code' => $status, 
+            $d = array('result' => $result,
+                'code' => $status,
                 'message' => $message);
             $this->set_content(json_encode($d));
         } else {
             echo $result;
         }
     }
-
-    public function success($result, $message) {
+    public function success($result, $message='') {
         $this->json($result, $message, 200);
+    }
+
+    public function error($result, $message='') {
+        $this->json($result, $message, 500);
     }
 
     public function set_content($content) {

@@ -45,13 +45,21 @@ class I18n {
         return $inst;
     }
 
-    public function get($text, $lang = NULL) {
+    public function get($text, $lang = NULL, $data = array()) {
         if ($lang == NULL) {
             $lang = $this->default_lang;
         }
         $t = strtolower($text);
-        if (array_key_exists($t, $this->_lang[$lang])) { 
-            return $this->_lang[$lang][$t];
+        if (array_key_exists($t, $this->_lang[$lang])) {
+            $param = array();
+            $param[0] = $this->_lang[$lang][$t];
+            $i = 1;
+            foreach ($data as $d) {
+                $param[$i] = $d;
+                $i++;
+            }
+            $result =call_user_func_array('sprintf', $param);
+            return $result;
         } else {
             return $text;
         }

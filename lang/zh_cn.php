@@ -10,4 +10,7 @@ $_lang['top']='最高';
 $_lang['latest'] ='最新';
 $_lang['username'] ='用户名';
 $_lang['password'] ='密码';
+$_lang['login'] ='登录';
+$_lang['register'] ='注册';
+$_lang['vote success'] ='投票成功';
 ?>
