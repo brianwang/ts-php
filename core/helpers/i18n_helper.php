@@ -7,8 +7,8 @@
 
 if (!function_exists('__')) {
 
-    function __($text, $lang = NULL,$data=array()) {
-        return I18n::create()->get($text, $lang,$data);
+    function __($text, $data=array(),$lang = NULL) {
+        return I18n::create()->get($text, $data,$lang);
     }
 
 }

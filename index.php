@@ -1,5 +1,5 @@
 <?php
-
+define('DEBUG', true);
 define('BASE_PATH', dirname(__FILE__));
 define('BASEPATH', BASE_PATH);
 define('APP_PATH', BASE_PATH . '/app');

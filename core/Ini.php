@@ -40,6 +40,9 @@ $include_path .=PATH_SEPARATOR . BASE_PATH . "/core/db/drivers";
 $include_path .=PATH_SEPARATOR . BASE_PATH . "/app/controllers";
 $include_path .=PATH_SEPARATOR . BASE_PATH . "/app/models";
 $include_path .=PATH_SEPARATOR . BASE_PATH . "/app/views";
+$include_path .=PATH_SEPARATOR . BASE_PATH . "/lib/filters";
+$include_path .=PATH_SEPARATOR . BASE_PATH . "/lib/helpers";
+$include_path .=PATH_SEPARATOR . BASE_PATH . "/lib";
 set_include_path(get_include_path() . PATH_SEPARATOR . $include_path);
 //set module paths
 $dir = "modules";

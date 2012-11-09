@@ -39,6 +39,10 @@ class Memcache implements Cache {
     public function save($name, $value, $ttl = NULL) {
         $this->mc->set($name, $value, $ttl);
     }
+    
+    public function delete($key){
+        $this->mc->delete($key);
+    }
 
 }
 

@@ -7,7 +7,8 @@ body{
     width: 960px;
 }
 .row{
-    margin-left:20px;
+    margin-left:10px;
+    margin-right:10px;
 }
 #header{
     background-color: #787AB5;
@@ -16,6 +17,7 @@ body{
 #footer{
     background-color: #787AB5;
     color:#FFF;
+    clear:both;
 }
 #footer a{
     color:#FFF;
@@ -27,6 +29,12 @@ body{
     left:45%;
     width: 200px;
     z-index:2000;
+}
+input.error,textarea.error{
+    color: red;
+}
+textarea.error:focus, input.error:focus{
+   border: 0.5px solid #f00;
 }
 
 .alerts p {
@@ -174,19 +182,26 @@ body{
     overflow:   visible;
     padding:    8px;
     position:   relative;
-    width:      280px;
+    width:      300px;
     height:     32px;
 }
 .ratings_stars {
     background: url('../img/star_empty.png') no-repeat;
     float:      left;
     height:     28px;
-    padding:    2px;
-    width:      32px;
+    padding:    1px;
+    width:      28px;
 }
 .ratings_vote {
     background: url('../img/star_full.png') no-repeat;
 }
 .ratings_over {
     background: url('../img/star_highlight.png') no-repeat;
+}
+.rate_title{
+    float:left; line-height: 28px; padding:10px;
+}
+#main-header{
+    border-bottom: 0.5px dotted #787AB5;
+    
 }

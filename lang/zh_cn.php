@@ -14,4 +14,6 @@ $_lang['login'] ='登录';
 $_lang['register'] ='注册';
 $_lang['vote success'] ='投票成功';
 $_lang['the url of code']="代码链接";
+$_lang['days']="%d 天";
+$_lang['preview']="预览";
 ?>

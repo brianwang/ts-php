@@ -45,7 +45,7 @@ class I18n {
         return $inst;
     }
 
-    public function get($text, $lang = NULL, $data = array()) {
+    public function get($text,$data,$lang = NULL) {
         if ($lang == NULL) {
             $lang = $this->default_lang;
         }

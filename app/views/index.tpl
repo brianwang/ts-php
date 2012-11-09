@@ -1,147 +1,129 @@
 {extends file="layout.tpl"}
 {block name=title}首页{/block}
 {block name=script}{literal}
+    $('#frm-login').validate({
+    rules: {description: {required: true,email:true}},
+    messages:{description: {required: "请输入邮箱",email:"邮箱格式不正确"}}
+    });
+    $('#frm-code').validate({
+    rules: {description: {required: true},code:{required: true}},
+    messages:{
+    description: {required: "请输入代码描述"},
+    code: {required: "请输入代码"}
+    },
+    highlight: function(element, errorClass, validClass) {
+    $(element).addClass('error');
+    },
+    unhighlight: function(element, errorClass) {
+    $(element).removeClass('error');
+    },
+    errorPlacement: function(error, element) {
+    element.focus();
+    element.attr('placeholder',error.text());
+    }
+    });
     $('#btn-savecode').click(function(){
+    if($('#frm-code').valid() ==true){
     $('#frm-code').ajaxSubmit({
     success:function(data,xhr,option){
     var lik = "<a href='"+data.result.url+"'>"+data.result.url+"</a>";
     $('#url').html(lik);
     }
     });
-    });
-     $('.ratings_stars').hover(
-            // Handles the mouseover
-            function() {
-                $(this).prevAll().andSelf().addClass('ratings_over');
-                $(this).nextAll().removeClass('ratings_vote'); 
-            },
-            // Handles the mouseout
-            function() {
-                $(this).prevAll().andSelf().removeClass('ratings_over');
-            }
-        );
-        
-     function set_votes(widget) {
-        var avg = $(widget).data('fsr').avg;
-        var votes = $(widget).data('fsr').number_votes;
-        var exact = $(widget).data('fsr').dec_avg;
-
-        window.console && console.log('and now in set_votes, it thinks the fsr is ' + $(widget).data('fsr').number_votes);
-
-        $(widget).find('.star_' + avg).prevAll().andSelf().addClass('ratings_vote');
-        $(widget).find('.star_' + avg).nextAll().removeClass('ratings_vote'); 
-        $(widget).find('.total_votes').text( votes + ' votes recorded (' + exact + ' rating)' );
     }
-        // This actually records the vote
-        $('.ratings_stars').bind('click', function() {
-            var star = this;
-            var widget = $(this).parent();
-            
-            var clicked_data = {
-                clicked_on : $(star).attr('class'),
-                value: $(star).attr('id'),
-                id : $(star).parent().attr('id')
-            };
-            $.post(
-            '{/literal}{site_url('/code/vote/')}{literal}',
-                clicked_data,
-                function(INFO) {
-                    widget.data( 'fsr', INFO.result);
-                    set_votes(widget);
-                },
-                'json'
-            ); 
-        });
-    
+    });
+    $('#btn-runcode').click(function(){
+    if($('#frm-code').valid() ==true){
+    $('#frm-code').ajaxSubmit({
+    data: { 'isrun' :true},
+    success:function(data,xhr,option){
+    var lik = "<a href='"+data.result.url+"'>"+data.result.url+"</a>";
+    $('#url').html(lik);
+    }
+    });
+    }
+    });
+    $('textarea[name=code]').keyup(function(e){
+    var text =$(e.target).val();
+    $('.prettyprint').find('code').text(text);
+    prettyPrint();
+    });
+
 {/literal}{/block}
 {block name=body}
 <div class="row" id="content">
     <div class="span8">
         <div id="url"></div>
-        <form action="{site_url('/code/save')}" 
-              method="POST" id="frm-code" class="form-horizontal">
-            <input type="text" name="description" placeholder="描述" style="width:100%;">
-            <textarea name="code" rows="14" style="width:100%;" placeholder="您的代码 "></textarea>
-            <input type="text" name="guestname" placeholder="您的名字" style="width:100%;">
-            <div style="width:400px;float:left;">
-                <div style="margin:10px 0 10px 0;">
-                    <span style="width:100px;float:left;line-height: 24px;">{__('language')}</span>
-                    <select name="language">
-                        {foreach $langs as $lang}
-                            <option>{$lang}</option>
+        <form action="{site_url('/code/save')}" method="POST" id="frm-code" class="form-horizontal">
+            <div class="row-fluid">
+                <div class="span5">
+                    <select name="language" MULTIPLE SIZE=19>
+                        {foreach $langs as $key=>$lang}
+                            <option value="{$key}" {if $key == 62 }selected="selected"{/if}>{$lang}</option>
                         {/foreach}
                     </select>
                 </div>
+                <div class="span7">
+                    <div class="control-group">
+                        <input type="text" name="description" placeholder="描述" style="width:100%;">
+                    </div>
+                    <textarea name="code" rows="15"  placeholder="您的代码 " style="width:100%;"></textarea>
+                </div>
+            </div>
+            <h2>{__('Preview')}</h2>
+            <pre class="prettyprint"><code class="language-java">
+                    <br/><br/><br/>
+                </code></pre>
+            <div style="width:400px;float:left;">
                 <div style="margin:10px 0 10px 0;">
                     <span style="width:100px;float:left;line-height: 24px;">{__('duration')}</span>
-                    <select name="public">
-                        <option>1days</option>
-                        <option>Private</option>
+                    <select name="duration">
+                        <option value=1>{__('days',[1])}</option>
+                        <option value=3>{__('days',[3])}</option>
                     </select>
                 </div>
-                <div style="margin:10px 0 10px 0;">
+                <div style="margin:10px 0 10px 0;" >
                     <span style="width:100px;float:left;line-height: 24px;">{__('public')}</span>
                     <select name="public">
-                        <option>{__('public')}</option>
-                        <option>{__('private')}</option>
+                        <option value="true">{__('public')}</option>
+                        <option value="false">{__('private')}</option>
                     </select>
                 </div>
             </div>
             <div style="width:200px;float:left;">
                 <button type="button" class="btn btn-primary" style="width: 150px;height:54px;" id="btn-savecode">提交代码</button>
-                <button type="button" class="btn btn-info"  style="width: 150px;height:54px;">运行代码</button>
+                <button type="button" class="btn btn-info"  style="width: 150px;height:54px;" id="btn-runcode">运行代码</button>
             </div>
         </form>
         <hr style="clear:both;">
-        <div>
-            <pre><code>
-                adfadsfdasfdas
-</code></pre>
-            <button >评价</button>
-        <div class='movie_choice'>
-            <div id="{$_id}" class="rate_widget">
-                <div class="star_1 ratings_stars" id="star_1"></div>
-                <div class="star_2 ratings_stars" id="star_2"></div>
-                <div class="star_3 ratings_stars" id="star_3"></div>
-                <div class="star_4 ratings_stars" id="star_4"></div>
-                <div class="star_5 ratings_stars" id="star_5"></div>
-                <div class="total_votes">vote data</div>
+      {foreach from=$codes item=l}
+        <div style="border-bottom:1px solid; margin-bottom: 10px;">
+            <pre><code>{$l.code}</code></pre>
+            <div class='movie_choice' >
+                <div class="rate_title">当前分： {$l.rank|default:0} 评分</div>
+                <div class="rate_widget">
+                    <div class="star_1 ratings_stars" id="star_1"></div>
+                    <div class="star_2 ratings_stars" id="star_2"></div>
+                    <div class="star_3 ratings_stars" id="star_3"></div>
+                    <div class="star_4 ratings_stars" id="star_4"></div>
+                    <div class="star_5 ratings_stars" id="star_5"></div>
+                    <div class="total_votes"></div>
+                </div>
             </div>
         </div>
-        </div>
+         {/foreach}
     </div>
     <div class="span3">
-        <div>
-            <ul class="nav nav-tabs">
-                <li class="active"><a href="#login" data-toggle="tab">{__('Login')}</a></li>
-                <li><a href="#register" data-toggle="tab">{__('Register')}</a></li>
-            </ul>
-            <div class="tab-content">
-                <div id="login" class="tab-pane active">
-                    <form action="/user/login">
-                        <div class="control-group" style="margin-top:15px;">
-                            <input type="text" name="username" placeholder="{__('Username')}">
-                            <input type="password" name="password" placeholder="{__('Password')}">
-                        </div>
-                        <div class="control-group">
-                            <button class="btn btn-primary">登录</button>
-                            <button class="btn btn-info">忘记密码</button>
-                        </div>
-                    </form>
+        <div id="login" class="tab-pane active">
+            <form action="/user/login" id="frm-login">
+                <div class="control-group">
+                    <input type="text" name="email" placeholder="{__('email')}">
                 </div>
-                <div id="register" class="tab-pane">
-                    <form action="/user/register">
-                        <div class="control-group" style="margin-top:15px;">
-                            <input type="text" name="username" placeholder="{__('Username')}">
-                            <input type="password" name="password" placeholder="{__('Password')}">
-                            <input type="password" name="c_password" placeholder="{__('Password')}">
-                        </div>
-                        <div class="control-group">
-                            <button class="btn btn-primary">注册</button>
-                        </div>
-                    </form>
+                <div class="control-group">
+                    <button class="btn btn-primary">登录</button>
+                    <button class="btn btn-info">忘记密码</button>
                 </div>
-            </div>
+            </form>
         </div>
         <hr>
         <div>
@@ -171,12 +153,12 @@
             <h2>{__('Top')}</h2>
             {foreach from=$greatcodes item=c}
                 <div style="margin-bottom: 10px;line-height: 24px;">
-                    <a href="{site_url('/code/get')}{$c._id}">{$c.description}</a>
-                    <span style="float:right">{$c.createtime|date_format:"%Y-%m-%d"}</span>
-                </div>
-            {/foreach}
+                                                         <a href="{site_url('/code/get')}{$c._id}">{$c.description}</a>
+                                                         <span style="float:right">{$c.createtime|date_format:"%Y-%m-%d"}</span>
+                                                     </div>
+                {/foreach}
+            </div>
         </div>
     </div>
-</div>
-{/block}
+    {/block}
 
