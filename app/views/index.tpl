@@ -99,17 +99,7 @@
       {foreach from=$codes item=l}
         <div style="border-bottom:1px solid; margin-bottom: 10px;">
             <pre><code>{$l.code}</code></pre>
-            <div class='movie_choice' >
-                <div class="rate_title">当前分： {$l.rank|default:0} 评分</div>
-                <div class="rate_widget">
-                    <div class="star_1 ratings_stars" id="star_1"></div>
-                    <div class="star_2 ratings_stars" id="star_2"></div>
-                    <div class="star_3 ratings_stars" id="star_3"></div>
-                    <div class="star_4 ratings_stars" id="star_4"></div>
-                    <div class="star_5 ratings_stars" id="star_5"></div>
-                    <div class="total_votes"></div>
-                </div>
-            </div>
+            {include 'partial/rate.tpl‘}
         </div>
          {/foreach}
     </div>

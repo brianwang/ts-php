@@ -75,11 +75,14 @@
             // Handles the mouseover
             function() {
                 $(this).prevAll().andSelf().addClass('ratings_over');
+                var text= $(this).attr('hint');
+                $(this).parent().find('.total_votes').text(text);
                 $(this).nextAll().removeClass('ratings_vote'); 
             },
             // Handles the mouseout
             function() {
                 $(this).prevAll().andSelf().removeClass('ratings_over');
+                $(this).parent().find('.total_votes').text('');
             }
         );
         

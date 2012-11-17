@@ -5,9 +5,9 @@
  * and open the template in the editor.
  */
 function show_error($error){
-    echo $error;
+    Response::show_error($error);
 }
 function show_404(){
-    echo $error;
+  Response::show404();
 }
 ?>

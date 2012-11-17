@@ -19,11 +19,15 @@ class code extends Controller {
             $this->output->show404();
         } else {
             $code = $this->code_m->get($id);
-            $code['code'] = htmlentities($code['code'], ENT_COMPAT, "UTF-8");
-            //$code['code']= nl2br($code['code']);
-            $this->data['url'] = $id;
-            $this->data['code'] = $code;
-            $this->viewfile = 'viewcode.tpl';
+            if (!empty($code)) {
+                $code['code'] = htmlentities($code['code'], ENT_COMPAT, "UTF-8");
+                //$code['code']= nl2br($code['code']);
+                $this->data['url'] = $id;
+                $this->data['code'] = $code;
+                $this->viewfile = 'viewcode.tpl';
+            } else {
+                show_404();
+            }
         }
     }
 
@@ -51,10 +55,8 @@ class code extends Controller {
     function save() {
         $title = $_POST['description'];
         $content = $_POST['code'];
-        //$user = $_POST['guestname'];
         $ip = $_SERVER['REMOTE_ADDR'];
         $id = md5($title . $content . $ip);
-
         $last = '';
         if (array_key_exists('lastupload', $_SESSION)) {
             $last = $_SESSION['lastupload'];
@@ -63,8 +65,8 @@ class code extends Controller {
             $this->output->json(__('You have submitted!'), '', 500);
         } else {
             $post = $this->input->post();
-            $shortid = PseudoCrypt::createshortid();
-            $post['_id'] = $shortid;
+            $id = PseudoCrypt::createshortid();
+            $post['_id'] = $id;
             $post['ip'] = $ip;
             $post['createtime'] = time();
             if (array_key_exists('language', $_POST)) {

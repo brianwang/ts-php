@@ -34,7 +34,7 @@ input.error,textarea.error{
     color: red;
 }
 textarea.error:focus, input.error:focus{
-   border: 0.5px solid #f00;
+    border: 0.5px solid #f00;
 }
 
 .alerts p {
@@ -182,7 +182,7 @@ textarea.error:focus, input.error:focus{
     overflow:   visible;
     padding:    8px;
     position:   relative;
-    width:      300px;
+    width:      400px;
     height:     32px;
 }
 .ratings_stars {
@@ -201,7 +201,10 @@ textarea.error:focus, input.error:focus{
 .rate_title{
     float:left; line-height: 28px; padding:10px;
 }
+.total_votes{
+    line-height: 28px; padding:3px;
+}
 #main-header{
     border-bottom: 0.5px dotted #787AB5;
-    
+
 }
