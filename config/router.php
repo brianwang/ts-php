@@ -12,5 +12,6 @@
  */
 $router['default_controller'] = 'pages';
 $router['default_action'] = 'index';
-$router['([a-zA-Z0-9]+)$'] = 'code/get/$1';
+#$router['tag/(.*)$'] = 'tag/get/$1';
+#$router['/([a-zA-Z0-9]+)$'] = 'code/get/$1';
 ?>

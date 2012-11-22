@@ -17,7 +17,8 @@ class tag extends Controller {
             show_404();
         }
         else{
-            $this->tags_m->get($name);
+            $code =$this->tags_m->get($id);
+            //$this->viewfile = ''
         }
     }
 

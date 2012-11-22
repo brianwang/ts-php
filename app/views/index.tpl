@@ -57,7 +57,7 @@
         <form action="{site_url('/code/save')}" method="POST" id="frm-code" class="form-horizontal">
             <div class="row-fluid">
                 <div class="span5">
-                    <select name="language" MULTIPLE SIZE=19>
+                    <select name="language" SIZE=19>
                         {foreach $langs as $key=>$lang}
                             <option value="{$key}" {if $key == 62 }selected="selected"{/if}>{$lang}</option>
                         {/foreach}
@@ -96,12 +96,24 @@
             </div>
         </form>
         <hr style="clear:both;">
-      {foreach from=$codes item=l}
-        <div style="border-bottom:1px solid; margin-bottom: 10px;">
-            <pre><code>{$l.code}</code></pre>
-            {include 'partial/rate.tpl‘}
-        </div>
-         {/foreach}
+        {foreach from=$codes item=l}
+            <div class="row" style="border-bottom:1px dotted #0e90d2; margin-bottom: 10px;">
+                <div class="span6">
+                <pre class="prettyprint linenums"><code><a href="{site_url('/code/get')}/{$l._id}">{$l.code|escape:'html'}</a></code></pre>
+                </div>
+                <aside class="span1">
+                    <ul class=" nav nav-stacked">
+                        <li>
+                            <a href="#" class="embed">Embed</a>
+                        </li>
+                        <li>
+                            <a href="#" class="copy">Copy</a>
+                        </li>
+                    </ul>
+                    
+                </aside>
+            </div>
+        {/foreach}
     </div>
     <div class="span3">
         <div id="login" class="tab-pane active">
@@ -143,12 +155,12 @@
             <h2>{__('Top')}</h2>
             {foreach from=$greatcodes item=c}
                 <div style="margin-bottom: 10px;line-height: 24px;">
-                                                         <a href="{site_url('/code/get')}{$c._id}">{$c.description}</a>
-                                                         <span style="float:right">{$c.createtime|date_format:"%Y-%m-%d"}</span>
-                                                     </div>
-                {/foreach}
-            </div>
+                    <a href="{site_url('/code/get')}{$c._id}">{$c.description}</a>
+                    <span style="float:right">{$c.createtime|date_format:"%Y-%m-%d"}</span>
+                </div>
+            {/foreach}
         </div>
     </div>
-    {/block}
+</div>
+{/block}
 

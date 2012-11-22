@@ -179,9 +179,8 @@ textarea.error:focus, input.error:focus{
 }
 
 .rate_widget {
-    overflow:   visible;
+    position: relative;
     padding:    8px;
-    position:   relative;
     width:      400px;
     height:     32px;
 }
@@ -199,12 +198,102 @@ textarea.error:focus, input.error:focus{
     background: url('../img/star_highlight.png') no-repeat;
 }
 .rate_title{
-    float:left; line-height: 28px; padding:10px;
+    float:left;
+    margin: 15px 20px 0 0;
+    top: 10px;
+    height: 28px;
 }
 .total_votes{
     line-height: 28px; padding:3px;
 }
 #main-header{
     border-bottom: 0.5px dotted #787AB5;
+}
+.snipt{
+    border-bottom:1px solid #ddd;
+}
+.snipt div{
+    margin: 0;
+}
+.snipt header h1 {
+    clear: left;
+    font: bold 16px/20px "Helvetica Neue",Helvetica,Arial,"Liberation Sans",FreeSans,sans-serif;
+    margin: 8px 15px 10px;
+}
+.snipt a.expand {
+    background: url("/public/img/expand.png") no-repeat scroll 15px 10px #FFFFFF;
+    box-shadow: 0 -25px 25px #FFFFFF;
+    color: #999999;
+    font: bold 12px "Helvetica Neue",Helvetica,Arial,"Liberation Sans",FreeSans,sans-serif;
+    padding: 5px 40px;
+    text-decoration: none;
+    width: 100%;
+    display: block;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+.snipt header{
+    background: -moz-linear-gradient(center top , #FFFFFF 0%, #EFFAF2 100%) repeat scroll 0 0 transparent;
+    border-bottom: 1px solid #F1F1EE;
+    /*box-shadow: 0 -1px 0 #FFFFFF inset;*/
+    min-height: 58px;
+}
+.snipt aside ul.options li a.embed {
+    background: url("/public/img/embed-icon.png") no-repeat 5px 10px;
+    /*background-image: url("/public/img/embed-icon.png");*/
+}
+.snipt aside ul.options li a.copy {
+    background: url("/public/img/copy-icon.png") no-repeat 5px 10px;
+    /*background-image: url("/public/img/embed-icon.png");*/
+}
+.snipt aside ul.options li a {
+    color: #000000;
+    display: block;
+    height: 24px;
+    font: bold 12px "Helvetica Neue",Helvetica,Arial,"Liberation Sans",FreeSans,sans-serif;
+    opacity: 0.5;
+    padding: 7px 10px 7px 35px;
+    position: relative;
+    text-decoration: none;
+}
+.snipt aside ul.options li {
+    list-style-type: none;
+   /* border: 0.5px solid #dde;*/
+}
+.snipt aside ul.options {
+    margin: 0;
+}
+.snipt pre{
+    border-radius:inherit;
+    border: none;
+}
+.snipt aside {
+    margin: 20px 0px 0 0;
+    background-color: #F5F5F5;
+    width: 100px;
+}
 
+.snipt aside ul.options li a:hover, 
+.snipt aside ul.options li a.hover {
+    background-color: rgba(128, 128, 128, 0.18);
+    opacity: 1;
+    text-decoration: none;
+}
+article, aside, details, figcaption, figure,
+footer, header, hgroup, nav, section {
+    display: block;
+}
+.snipt header h2 {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    border-image: none;
+    border-style: none solid solid;
+    border-width: 0 1px 1px;
+    color: #73BBC5;
+    display: inline-block;
+    font: 12px "Helvetica Neue",Helvetica,Arial,"Liberation Sans",FreeSans,sans-serif;
+    margin: 0 0 0 10px;
+    padding: 3px 8px 2px;
 }

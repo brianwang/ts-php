@@ -10,6 +10,7 @@
         <link rel="stylesheet" href="{assert_url('/css/bootstrap.css')}"/>
         <link rel="stylesheet" href="{assert_url('/css/bootstrap-notify.css')}"/>
         <link rel="stylesheet" href="{assert_url('/css/Style.css')}"/>
+        <!--link rel="stylesheet" href="{assert_url('/css/snippet.css')}"/-->
         <link href="{assert_url('/codeprettify/prettify.css')}" type="text/css" rel="stylesheet" />
         
         <script src="{assert_url('/js/jquery1.7.js')}" type="text/javascript"></script>
@@ -95,7 +96,7 @@
 
         $(widget).find('.star_' + avg).prevAll().andSelf().addClass('ratings_vote');
         $(widget).find('.star_' + avg).nextAll().removeClass('ratings_vote'); 
-        $(widget).find('.total_votes').text( votes + ' votes recorded (' + exact + ' rating)' );
+        //$(widget).find('.total_votes').text( votes + ' votes recorded (' + exact + ' rating)' );
     }
         // This actually records the vote
         $('.ratings_stars').bind('click', function() {

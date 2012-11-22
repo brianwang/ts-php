@@ -40,6 +40,7 @@ class Response {
 
     public function show404() {
         set_status_header(404);
+        echo 'Your url want to get not exists!';
     }
 
     public function show_error($error) {
