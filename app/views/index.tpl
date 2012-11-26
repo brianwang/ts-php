@@ -18,42 +18,34 @@
     $(element).removeClass('error');
     },
     errorPlacement: function(error, element) {
-    element.focus();
-    element.attr('placeholder',error.text());
-    }
-    });
-    $('#btn-savecode').click(function(){
-    if($('#frm-code').valid() ==true){
-    $('#frm-code').ajaxSubmit({
-    success:function(data,xhr,option){
-    var lik = "<a href='"+data.result.url+"'>"+data.result.url+"</a>";
-    $('#url').html(lik);
-    }
-    });
-    }
-    });
-    $('#btn-runcode').click(function(){
-    if($('#frm-code').valid() ==true){
-    $('#frm-code').ajaxSubmit({
-    data: { 'isrun' :true},
-    success:function(data,xhr,option){
-    var lik = "<a href='"+data.result.url+"'>"+data.result.url+"</a>";
-    $('#url').html(lik);
-    }
-    });
+        element.focus();
+        element.attr('placeholder',error.text());
     }
     });
     $('textarea[name=code]').keyup(function(e){
-    var text =$(e.target).val();
-    $('.prettyprint').find('code').text(text);
-    prettyPrint();
+        var text =$('.editor').val();
+        $('#preview').text(text);
+        prettyPrint();
     });
+    $('#btn-savecode').click(function(e){
+        //e.preventDefault();
+        //CKEDITOR.instances.code.updateElement();
+        if($('#frm-code').valid() ==true){
+            $('#frm-code').ajaxSubmit({
+            success:function(data,xhr,option){
+            //$('#url a').attr('href' , data.result.url).text(data.result.url);
+        }
+    });
+    }
+    });
+   
+    //$('textarea.editor').ckeditor();
 
 {/literal}{/block}
 {block name=body}
 <div class="row" id="content">
     <div class="span8">
-        <div id="url"></div>
+        
         <form action="{site_url('/code/save')}" method="POST" id="frm-code" class="form-horizontal">
             <div class="row-fluid">
                 <div class="span5">
@@ -67,11 +59,11 @@
                     <div class="control-group">
                         <input type="text" name="description" placeholder="描述" style="width:100%;">
                     </div>
-                    <textarea name="code" rows="15"  placeholder="您的代码 " style="width:100%;"></textarea>
+                    <textarea name="code" rows="15"  placeholder="您的代码 " style="width:100%;" class="editor"></textarea>
                 </div>
             </div>
             <h2>{__('Preview')}</h2>
-            <pre class="prettyprint"><code class="language-java">
+            <pre class="prettyprint" id="preview"><code class="language-java">
                     <br/><br/><br/>
                 </code></pre>
             <div style="width:400px;float:left;">
@@ -92,38 +84,20 @@
             </div>
             <div style="width:200px;float:left;">
                 <button type="button" class="btn btn-primary" style="width: 150px;height:54px;" id="btn-savecode">提交代码</button>
-                <button type="button" class="btn btn-info"  style="width: 150px;height:54px;" id="btn-runcode">运行代码</button>
             </div>
         </form>
         <hr style="clear:both;">
-        {foreach from=$codes item=l}
-            <div class="row" style="border-bottom:1px dotted #0e90d2; margin-bottom: 10px;">
-                <div class="span6">
-                <pre class="prettyprint linenums"><code><a href="{site_url('/code/get')}/{$l._id}">{$l.code|escape:'html'}</a></code></pre>
-                </div>
-                <aside class="span1">
-                    <ul class=" nav nav-stacked">
-                        <li>
-                            <a href="#" class="embed">Embed</a>
-                        </li>
-                        <li>
-                            <a href="#" class="copy">Copy</a>
-                        </li>
-                    </ul>
-                    
-                </aside>
-            </div>
-        {/foreach}
     </div>
     <div class="span3">
         <div id="login" class="tab-pane active">
-            <form action="/user/login" id="frm-login">
+            <form action="{site_url('/user/login')}" id="frm-login" method="POST">
                 <div class="control-group">
                     <input type="text" name="email" placeholder="{__('email')}">
+                    <input type="password" name="password" placeholder="{__('password')}">
                 </div>
                 <div class="control-group">
-                    <button class="btn btn-primary">登录</button>
-                    <button class="btn btn-info">忘记密码</button>
+                    <button class="btn btn-primary">{__('Login')}</button>
+                    <button class="btn btn-info">{__('Forget password?')}</button>
                 </div>
             </form>
         </div>

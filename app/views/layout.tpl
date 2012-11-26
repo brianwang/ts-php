@@ -12,8 +12,12 @@
         <link rel="stylesheet" href="{assert_url('/css/Style.css')}"/>
         <!--link rel="stylesheet" href="{assert_url('/css/snippet.css')}"/-->
         <link href="{assert_url('/codeprettify/prettify.css')}" type="text/css" rel="stylesheet" />
-        
         <script src="{assert_url('/js/jquery1.7.js')}" type="text/javascript"></script>
+        <script src="{assert_url('/ckeditor/ckeditor.js')}" type="text/javascript"></script>
+        <script src="{assert_url('/ckeditor/config.js')}" type="text/javascript"></script>
+
+        <script src="{assert_url('/ckeditor/adapters/jquery.js')}" type="text/javascript"></script>
+        <!--script src="{assert_url('/ckeditor/jquery.CKEditor.js')}" type="text/javascript"></script-->
         <script src="{assert_url('/js/jquery.form.js')}" type="text/javascript"></script>
         <script src="{assert_url('/js/jquery.tmpl.js')}" type="text/javascript"></script>
         <script src="{assert_url('/js/bootstrap.js')}" type="text/javascript"></script>
@@ -22,6 +26,29 @@
         <script src="{assert_url('/jquery-validation-1.9.0/jquery.validate.js')}" type="text/javascript"></script>
         <script src="{assert_url('/jquery-validation-1.9.0/additional-methods.js')}" type="text/javascript"></script>
         <script src="{assert_url('/codeprettify/prettify.js')}" type="text/javascript"></script>
+        <script>
+            function copyToClipboard (text) {
+            if(window.prompt ("Copy to clipboard: Ctrl+C, Enter", text) == true){
+                      
+        }
+    }
+    function copyIntoClipboard(text) {
+    var flashId = 'flashId-HKxmj5';
+    /* Replace this with your clipboard.swf location */
+    var clipboardSWF = '/public/clipboard.swf';
+    if(!document.getElementById(flashId)) {
+    var div = document.createElement('div');
+    div.id = flashId;
+    document.body.appendChild(div);
+}
+document.getElementById(flashId).innerHTML = '';
+var content = '<embed src="' + 
+    clipboardSWF +
+    '" FlashVars="clipboard=' + encodeURIComponent(text) +
+    '" width="0" height="0" type="application/x-shockwave-flash"></embed>';
+document.getElementById(flashId).innerHTML = content;
+}
+        </script>
         {block name=css}{/block}
     </head>
     <body>
@@ -126,12 +153,15 @@
                   .ajaxStop(function(){$('#loading').delay(5000).hide();})
                   .ajaxSuccess(function(event,xhr,option){
                                 $('#loading').delay(5000).hide();
-                                var e = JSON.parse(xhr.responseText);
-                                if(e != undefined && e.result !=undefined){
-                                    $('#notify-content').text(e.message);
-                                    $('.alert-message').addClass('success');
-                                    $('#notify').fadeIn().fadeOut(1500);
-                                }
+                                var ct = xhr.getResponseHeader("content-type") || "";
+                                if(ct.indexOf('json')> -1){
+                                    var e = JSON.parse(xhr.responseText);
+                                    if(e != undefined && e.result !=undefined){
+                                        $('#notify-content').text(e.message);
+                                        $('.alert-message').addClass('success');
+                                        $('#notify').fadeIn().fadeOut(1500);
+                                    }
+                                 }
                             }
 );
             {/literal}

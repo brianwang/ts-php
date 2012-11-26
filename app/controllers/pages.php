@@ -28,11 +28,11 @@ class pages extends Controller {
         $this->viewfile = 'index.tpl';
     }
 
-    function code() {
-        $this->data['codes'] =$this->code_m->get_all();
+    function code($page=1) {
+        $this->data['codes'] =$this->code_m->get_all(PAGESIZE,$page);
+        $this->data['curpage'] = $page;
         $this->viewfile = 'code.tpl';
     }
-
     function api() {
         $this->viewfile = 'api.tpl';
     }

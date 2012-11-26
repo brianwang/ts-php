@@ -33,13 +33,13 @@ class ExtModel extends Model {
     }
 
     function add($data) {
-        //$this->beforeupdate($data);
+        $this->beforeupdate($data);
         $this->mongo->insert($this->modelname, $data);
         return $data['_id'];
     }
 
     function update($data) {
-        //$this->beforeupdate($data);
+        $this->beforeupdate($data);
         $this->mongo->update($this->modelname, $data);
     }
 
@@ -52,12 +52,12 @@ class ExtModel extends Model {
 
     function beforeupdate(&$data) {
         if (empty($data['create_date']) || !isset($data['create_date'])) {
-            $data['create_date'] = now();
+            $data['create_date'] = time();
             if (array_key_exists('uid', $_SESSION)) {
                 $data['creator'] = $_SESSION['uid'];
             }
         }
-        $data['update_date'] = now();
+        $data['update_date'] = time();
         if (array_key_exists('uid', $_SESSION)) {
             $data['lastupdator'] = $_SESSION['uid'];
         }
@@ -67,13 +67,17 @@ class ExtModel extends Model {
     }
 
     function save($data) {
-        //$this->beforeupdate($data);
+        $this->beforeupdate($data);
         $this->mongo->save($this->modelname, $data);
     }
     function search($text='',$other=array()){
         return $this->mongo->or_where($other)->search($this->modelname,$text,array('name','description'));
     }
-    function get_all() {
+    function get_all($size = PAGESIZE, $page = false) {
+        if(!$page){
+            $this->mongo->limit($size);
+            $this->mongo->offset($page*$size);
+        }
         return $this->mongo->get($this->modelname);
     }
 }

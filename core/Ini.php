@@ -36,6 +36,7 @@ $include_path .=PATH_SEPARATOR . BASE_PATH . "/core/filters";
 $include_path .=PATH_SEPARATOR . BASE_PATH . "/core/cache";
 $include_path .=PATH_SEPARATOR . BASE_PATH . "/core/helpers";
 $include_path .=PATH_SEPARATOR . BASE_PATH . "/core/db";
+$include_path .=PATH_SEPARATOR . BASE_PATH . "/core/lib";
 $include_path .=PATH_SEPARATOR . BASE_PATH . "/core/db/drivers";
 $include_path .=PATH_SEPARATOR . BASE_PATH . "/app/controllers";
 $include_path .=PATH_SEPARATOR . BASE_PATH . "/app/models";

@@ -212,8 +212,11 @@ textarea.error:focus, input.error:focus{
 .snipt{
     border-bottom:1px solid #ddd;
 }
+.copytool{
+    margin:0;
+}
 .snipt div{
-    margin: 0;
+    /*margin: 0;*/
 }
 .snipt header h1 {
     clear: left;

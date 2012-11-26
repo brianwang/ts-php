@@ -16,44 +16,20 @@
                 <li><a href="/">Home</a> <span class="divider">/</span></li>
                 <li class="active">{__('Code')}</li>
             </ul>
-            {foreach from=$codes item=c}
-                <div class="snipt">
-                    <div class="span7">
-                        <header>
-                            <h2><a href="{site_url('/code/tag/'|cat: $c.language)}">{$c.language}</a></h2>
-                            <h1><a href="{site_url('/code/get')}/{$c._id}" style="float:left;">{$c.description}</a></h1>
-                            <span style="float:right;margin-right:  10px;">分值:{$c.rank|default: 0}</span>
-                        </header>
-                        <div style="clear:both;"></div>
-                        <div>
-                            <pre style="height:150px;"><code>{$c.code|escape}</code></pre>
-                            <a href="#" class="expand">
-                                <span class="expand">Expand</span>
-                                <span class="collapse">Collapse</span>
-                                <span class="lines">(23 lines)</span>
-                            </a>
-                        </div>
-                        <div style="padding: 10px;">
-                            <span>共{mb_strlen($c.code)}个字符</span>
-                            <span><a href="#">留言</a></span>
-                            <span><a href="#">收藏</a></span>
-                        </div>
-                    </div>
-                    <div class="span2">
-                        <aside>
-                            <ul class="options">
-                                <li>
-                                    <a href="#" class="embed">Embed</a>
-                                </li>
-                                <li>
-                                    <a href="#" class="copy">Copy</a>
-                                </li>
-                            </ul>
-                        </aside>
-                    </div>
-                            <div style="clear:both;"></div>
-                </div>
-            {/foreach}
+            <div id="codelist">
+               {include file='partial/code-tmpl.tpl' codes=$codes}
+            </div>
+            <button class="btn" style="width:100%;height: 30px;"
+                    onclick="
+                        $(this).addClass('loading');
+                        window.location = '{site_url("/pages/code/")}{$curpage+1}';
+//                        $.get('{site_url("/partial/code/")}#{$curpage+1}',function(data){
+//                           $('#codelist').append(data);
+//                           window.location.hash = window.location.hash 
+//                        });
+                        return false;
+                     "
+                    >{__('NextPage')}</button>
         </div>
     </div>
 </div>
