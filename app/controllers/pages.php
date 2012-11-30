@@ -28,11 +28,23 @@ class pages extends Controller {
         $this->viewfile = 'index.tpl';
     }
 
-    function code($page=1) {
-        $this->data['codes'] =$this->code_m->get_all(PAGESIZE,$page);
+    function resetpassword() {
+        if (!isset($_GET['email'])) {
+            show_404();
+        } else {
+            $email = base64_decode($_GET['email']);
+            $email =Encrypt::aes256_decode($email);
+            $this->data['email'] = $email;
+            $this->viewfile = "resetsuccess.tpl";
+        }
+    }
+
+    function code($page = 1) {
+        $this->data['codes'] = $this->code_m->get_all(PAGESIZE, $page);
         $this->data['curpage'] = $page;
         $this->viewfile = 'code.tpl';
     }
+
     function api() {
         $this->viewfile = 'api.tpl';
     }

@@ -64,11 +64,13 @@ class ExtModel extends Model {
         if (!array_key_exists('_id', $data) || empty($data['_id']) || !isset($data['_id'])) {
             $data['_id'] = Uuid::v4();
         }
+        return $data['_id'];
     }
 
     function save($data) {
-        $this->beforeupdate($data);
+        $uid =$this->beforeupdate($data);
         $this->mongo->save($this->modelname, $data);
+        return $uid;
     }
     function search($text='',$other=array()){
         return $this->mongo->or_where($other)->search($this->modelname,$text,array('name','description'));

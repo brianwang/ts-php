@@ -2,8 +2,8 @@
 {block name=title}首页{/block}
 {block name=script}{literal}
     $('#frm-login').validate({
-    rules: {description: {required: true,email:true}},
-    messages:{description: {required: "请输入邮箱",email:"邮箱格式不正确"}}
+    rules: {email: {required: true,email:true}},
+    messages:{email: {required: "请输入邮箱",email:"邮箱格式不正确"}}
     });
     $('#frm-code').validate({
     rules: {description: {required: true},code:{required: true}},
@@ -28,19 +28,13 @@
         prettyPrint();
     });
     $('#btn-savecode').click(function(e){
-        //e.preventDefault();
-        //CKEDITOR.instances.code.updateElement();
         if($('#frm-code').valid() ==true){
             $('#frm-code').ajaxSubmit({
             success:function(data,xhr,option){
-            //$('#url a').attr('href' , data.result.url).text(data.result.url);
         }
     });
     }
     });
-   
-    //$('textarea.editor').ckeditor();
-
 {/literal}{/block}
 {block name=body}
 <div class="row" id="content">
@@ -89,6 +83,7 @@
         <hr style="clear:both;">
     </div>
     <div class="span3">
+        {if !isset($smarty.session.user)}
         <div id="login" class="tab-pane active">
             <form action="{site_url('/user/login')}" id="frm-login" method="POST">
                 <div class="control-group">
@@ -96,11 +91,20 @@
                     <input type="password" name="password" placeholder="{__('password')}">
                 </div>
                 <div class="control-group">
-                    <button class="btn btn-primary">{__('Login')}</button>
-                    <button class="btn btn-info">{__('Forget password?')}</button>
+                    <button class="btn btn-primary" >{__('Login/register')}</button>
+                    <button class="btn btn-info" type="button" 
+                            onclick="
+                                window.location='{site_url('/user/forgetpassword')}';
+                                return false;">{__('Forget password?')}</button>
                 </div>
             </form>
         </div>
+                {else}
+             <div id="login">
+                    Welcome, {$smarty.session.user.email}
+                    <button class="btn btn-primary" onclick="window.location='user/logout';return false;">{__('logout')}</button>
+            </div>
+         {/if}
         <hr>
         <div>
             <h3>目前有{$codecount} 段代码</h3>
