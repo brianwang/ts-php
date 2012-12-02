@@ -25,5 +25,8 @@ class Request {
         return !empty($_SERVER['HTTP_X_REQUESTED_WITH'])
                 && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
     }
+    public function is_post() {
+        return $_SERVER['REQUEST_METHOD'] === 'POST';
+    }
 
 }

@@ -18,13 +18,13 @@ class Encrypt {
         $iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
         $key = Config::get('aeskey');
         $crypttext = mcrypt_encrypt(MCRYPT_RIJNDAEL_256, $key, $data, MCRYPT_MODE_ECB, $iv);
-        return base64_encode($crypttext);
+        return trim(base64_encode($crypttext));
     }
 
     public static function aes256_decode($data) {
         $data = base64_decode($data);
         $key = Config::get('aeskey');
-        $decode = mcrypt_decrypt(MCRYPT_RIJNDAEL_256, $key, $data, MCRYPT_MODE_ECB);
+        $decode = trim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, $key, $data, MCRYPT_MODE_ECB));
         return $decode;
     }
 

@@ -11,8 +11,9 @@
  * @author brian
  */
 class ExtModel extends Model {
+
     //put your code here
-    
+
     protected $modelname;
 
     function get($id) {
@@ -43,9 +44,10 @@ class ExtModel extends Model {
         $this->mongo->update($this->modelname, $data);
     }
 
-    function count(){
+    function count() {
         return $this->mongo->count($this->modelname);
     }
+
     function delete($id) {
         $this->mongo->where(array('_id' => $id))->delete($this->modelname);
     }
@@ -55,11 +57,15 @@ class ExtModel extends Model {
             $data['create_date'] = time();
             if (array_key_exists('uid', $_SESSION)) {
                 $data['creator'] = $_SESSION['uid'];
+            } else {
+                $data['creator'] = 'guest-' . $_SERVER['REMOTE_ADDR'];
             }
         }
         $data['update_date'] = time();
         if (array_key_exists('uid', $_SESSION)) {
             $data['lastupdator'] = $_SESSION['uid'];
+        } else {
+            $data['lastupdator'] = 'guest-' . $_SERVER['REMOTE_ADDR'];
         }
         if (!array_key_exists('_id', $data) || empty($data['_id']) || !isset($data['_id'])) {
             $data['_id'] = Uuid::v4();
@@ -68,20 +74,26 @@ class ExtModel extends Model {
     }
 
     function save($data) {
-        $uid =$this->beforeupdate($data);
+        $uid = $this->beforeupdate($data);
         $this->mongo->save($this->modelname, $data);
         return $uid;
     }
-    function search($text='',$other=array()){
-        return $this->mongo->or_where($other)->search($this->modelname,$text,array('name','description'));
+
+    function search($text = '', $other = array(), $fields = array('name', 'description')) {
+        if (!empty($other)) {
+            $this->mongo->or_where($other);
+        }
+        return $this->mongo->search($this->modelname, $text, $fields);
     }
+
     function get_all($size = PAGESIZE, $page = false) {
-        if(!$page){
+        if (!$page) {
             $this->mongo->limit($size);
-            $this->mongo->offset($page*$size);
+            $this->mongo->offset($page * $size);
         }
         return $this->mongo->get($this->modelname);
     }
+
 }
 
 ?>

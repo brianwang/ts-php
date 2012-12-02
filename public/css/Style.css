@@ -181,7 +181,7 @@ textarea.error:focus, input.error:focus{
 .rate_widget {
     position: relative;
     padding:    8px;
-    width:      400px;
+    width:      450px;
     height:     32px;
 }
 .ratings_stars {
@@ -208,6 +208,14 @@ textarea.error:focus, input.error:focus{
 }
 #main-header{
     border-bottom: 0.5px dotted #787AB5;
+}
+.comment{
+    margin-bottom: 20px;
+}
+.snipt pre{
+    height: 150px;
+    overflow: hidden;
+    
 }
 .snipt{
     border-bottom:1px solid #ddd;

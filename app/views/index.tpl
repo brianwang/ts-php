@@ -31,6 +31,7 @@
         if($('#frm-code').valid() ==true){
             $('#frm-code').ajaxSubmit({
             success:function(data,xhr,option){
+                window.location.reload();
         }
     });
     }
@@ -38,7 +39,7 @@
 {/literal}{/block}
 {block name=body}
 <div class="row" id="content">
-    <div class="span8">
+    <div class="span7">
         
         <form action="{site_url('/code/save')}" method="POST" id="frm-code" class="form-horizontal">
             <div class="row-fluid">
@@ -49,7 +50,7 @@
                         {/foreach}
                     </select>
                 </div>
-                <div class="span7">
+                <div class="span6">
                     <div class="control-group">
                         <input type="text" name="description" placeholder="描述" style="width:100%;">
                     </div>
@@ -60,31 +61,31 @@
             <pre class="prettyprint" id="preview"><code class="language-java">
                     <br/><br/><br/>
                 </code></pre>
-            <div style="width:400px;float:left;">
-                <div style="margin:10px 0 10px 0;">
-                    <span style="width:100px;float:left;line-height: 24px;">{__('duration')}</span>
+            <div style="width:300px;float:left;">
+                <div>
+                    <span style="width:70px;float:left;line-height: 24px;">{__('duration')}</span>
                     <select name="duration">
                         <option value=1>{__('days',[1])}</option>
                         <option value=3>{__('days',[3])}</option>
                     </select>
                 </div>
-                <div style="margin:10px 0 10px 0;" >
-                    <span style="width:100px;float:left;line-height: 24px;">{__('public')}</span>
+                <div  >
+                    <span style="width:70px;float:left;line-height: 24px;">{__('public')}</span>
                     <select name="public">
                         <option value="true">{__('public')}</option>
                         <option value="false">{__('private')}</option>
                     </select>
                 </div>
             </div>
-            <div style="width:200px;float:left;">
+            <div style="width:150px;float:left;">
                 <button type="button" class="btn btn-primary" style="width: 150px;height:54px;" id="btn-savecode">提交代码</button>
             </div>
         </form>
         <hr style="clear:both;">
     </div>
-    <div class="span3">
+    <div class="span4">
         {if !isset($smarty.session.user)}
-        <div id="login" class="tab-pane active">
+        <div id="login">
             <form action="{site_url('/user/login')}" id="frm-login" method="POST">
                 <div class="control-group">
                     <input type="text" name="email" placeholder="{__('email')}">
@@ -133,7 +134,7 @@
             <h2>{__('Top')}</h2>
             {foreach from=$greatcodes item=c}
                 <div style="margin-bottom: 10px;line-height: 24px;">
-                    <a href="{site_url('/code/get')}{$c._id}">{$c.description}</a>
+                    <a href="{site_url('/code/get/')}{$c._id}">{$c.description}</a>
                     <span style="float:right">{$c.createtime|date_format:"%Y-%m-%d"}</span>
                 </div>
             {/foreach}

@@ -31,17 +31,42 @@ class code extends Controller {
         }
     }
 
+    function search() {
+        if (isset($_GET['query'])) {
+            $result = $this->code_m->search( $_GET['query'], array(), array('code', 'description'));
+            $re = array();
+            foreach($result as $r) {
+                array_push($re,$r['description']);
+            }
+            $this->output->success(array('options' => $re));
+        }
+    }
+
+    function script($id = '') {
+        if ($id == '') {
+            echo 'Not found from codesgist.com';
+        } else {
+            $this->data['c'] = $this->code_m->get($id);
+            $content = $this->ve->display('partial/code-content.tpl', $this->data);
+            $order = array("\r\n", "\n", "\r");
+            $replace = '';
+            $content = str_replace($order, $replace, $content);
+            $content = str_replace("'", "\\'", $content);
+            echo 'document.write(\'' . $content . '\');';
+        }
+    }
+
     function tag($tag = '') {
         $this->data['codes'] = $this->code_m->getbytag($tag);
         $this->viewfile = 'code.tpl';
     }
 
 //create new comment
-    function comment($id = NULL) {
-        if ($id == NULL
-                || $this->input->ispost()) {
+    function comment() {
+        if (!isset($_POST['id']) || !$this->input->is_post()) {
             show_404();
         } else {
+            $id = $_POST['id'];
             $code = $this->code_m->get($id);
             if (empty($code)) {
                 show_404();
@@ -50,8 +75,14 @@ class code extends Controller {
                 if (!isset($code['comments'])) {
                     $code['comments'] = array();
                 }
-                if (isset($post['comments'])) {
-                    $creator = isset($post['uid']) ? $_SESSION['uid'] : $post['uid'];
+                if (isset($post['comment'])) {
+                    if (isset($post['uid'])) {
+                        $creator = $post['uid'];
+                    } else if (isset($_SESSION['uid'])) {
+                        $creator = $_SESSION['uid'];
+                    } else {
+                        $creator = 'guest-' . $_SERVER['REMOTE_ADDR'];
+                    }
                     array_push($code['comments'], array(
                         'id' => Uuid::v4(),
                         'comment' => $post['comment'],
@@ -61,8 +92,8 @@ class code extends Controller {
                             )
                     );
                     $this->code_m->save($code);
-                    $this->output->success(__('sucess'));
                 }
+                redirect(site_url('/code/get/' . $id));
             }
         }
     }
@@ -102,10 +133,48 @@ class code extends Controller {
             $this->output->error(__('Vote Error'));
         } else {
             $value = substr($_POST['value'], 5);
+            if (isset($_POST['id'])) {
+                $code = $this->code_m->get($_POST['id']);
+                if (!isset($code['votes'])) {
+                    $code['votes'] = array();
+                }
+                if (isset($_SESSION['uid'])) {
+                    $user = $_SESSION['uid'];
+                } else {
+                    $user = 'guest';
+                }
+                $data = array('uid' => $user, 'value' => $value);
+                array_push($code['votes'], $data);
+                $sum = 0.0;
+                $count = 0;
+                foreach ($code['votes'] as $v) {
+                    $count++;
+                    $sum += $v['value'];
+                }
+                $avg = number_format($sum / $count, 2);
+                $code['avgvalue'] = $avg;
+                $this->code_m->save($code);
+            }
             $this->output->success(
-                    array('avg' => $value,
-                'number_votes' => $value,
-                'dec_avg' => 4), __('vote success'));
+                    array('avg' => $avg,
+                'number_votes' => $count)
+                    //'dec_avg' => 4)
+                    , __('vote success'));
+        }
+    }
+
+    function savecode($id = '') {
+        if ($id == '' || !isset($_POST['code'])) {
+            show_404();
+        } else {
+            $code = $this->code_m->get($id);
+            if (!empty($code)) {
+                $code['code'] = $_POST['code'];
+                $this->code_m->save($code);
+                redirect(site_url('/code/get/' . $id));
+            } else {
+                show_404();
+            }
         }
     }
 

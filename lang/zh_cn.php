@@ -17,4 +17,6 @@ $_lang['the url of code']="代码链接";
 $_lang['days']="%d 天";
 $_lang['lines']="%d 行";
 $_lang['preview']="预览";
+$_lang['expand'] ='展开';
+$_lang['collapse'] ='收起';
 ?>

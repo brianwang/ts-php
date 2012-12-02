@@ -23,7 +23,7 @@ class code_m extends ExtModel {
 
     function getgreat() {
         $this->mongo->limit(15);
-        return $this->mongo->order_by(array('score' => 'DESC'))
+        return $this->mongo->order_by(array('avgvalue' => 'DESC'))
                         ->get($this->modelname);
     }
 

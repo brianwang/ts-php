@@ -38,6 +38,12 @@ class ViewEngine {
         }
         ob_flush();
     }
+    
+    public function display($filename,$data){
+        if ($this->tmplengine != NULL) {
+           return    $this->tmplengine->display($filename,$data);
+        }
+    }
 
 }
 

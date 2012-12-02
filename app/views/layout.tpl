@@ -13,6 +13,9 @@
         <!--link rel="stylesheet" href="{assert_url('/css/snippet.css')}"/-->
         <link href="{assert_url('/codeprettify/prettify.css')}" type="text/css" rel="stylesheet" />
         <script src="{assert_url('/js/jquery1.7.js')}" type="text/javascript"></script>
+        <script src="{assert_url('/js/underscore.js')}" type="text/javascript"></script>
+        <script src="{assert_url('/js/backbone.js')}" type="text/javascript"></script>
+        <script src="{assert_url('/js/ba-debug.js')}" type="text/javascript"></script>
         <script src="{assert_url('/ckeditor/ckeditor.js')}" type="text/javascript"></script>
         <script src="{assert_url('/ckeditor/config.js')}" type="text/javascript"></script>
 
@@ -117,14 +120,21 @@ document.getElementById(flashId).innerHTML = content;
      function set_votes(widget) {
         var avg = $(widget).data('fsr').avg;
         var votes = $(widget).data('fsr').number_votes;
-        var exact = $(widget).data('fsr').dec_avg;
-
-        window.console && console.log('and now in set_votes, it thinks the fsr is ' + $(widget).data('fsr').number_votes);
-
+        $(widget).parent().find('.avgvalue').text(avg);
+        $(widget).parent().find('.votes').text(votes);
         $(widget).find('.star_' + avg).prevAll().andSelf().addClass('ratings_vote');
         $(widget).find('.star_' + avg).nextAll().removeClass('ratings_vote'); 
-        //$(widget).find('.total_votes').text( votes + ' votes recorded (' + exact + ' rating)' );
     }
+       $('.typeahead').ajaxStart(function(){
+                    //$(this).append($('.loading'));
+                }).typeahead({
+            source: function(query, process){
+                return $.get('{/literal}{site_url('/code/search')}{literal}', {query: query}, function(data){
+                    //alert(data);
+                    return process(data.result.options);
+                    });
+            }
+        });
         // This actually records the vote
         $('.ratings_stars').bind('click', function() {
             var star = this;
@@ -148,22 +158,22 @@ document.getElementById(flashId).innerHTML = content;
             {/literal}
             {block name=script}{/block}
             {literal}
-                 
-                }).ajaxStart(function(){$('#loading').show();})
-                  .ajaxStop(function(){$('#loading').delay(5000).hide();})
-                  .ajaxSuccess(function(event,xhr,option){
-                                $('#loading').delay(5000).hide();
-                                var ct = xhr.getResponseHeader("content-type") || "";
-                                if(ct.indexOf('json')> -1){
-                                    var e = JSON.parse(xhr.responseText);
-                                    if(e != undefined && e.result !=undefined){
-                                        $('#notify-content').text(e.message);
-                                        $('.alert-message').addClass('success');
-                                        $('#notify').fadeIn().fadeOut(1500);
-                                    }
-                                 }
-                            }
-);
+                });
+//                  .ajaxStart(function(){$('#loading').show();})
+//                  .ajaxStop(function(){$('#loading').delay(5000).hide();})
+//                  .ajaxSuccess(function(event,xhr,option){
+//                                //$('#loading').delay(5000).hide();
+//                                var ct = xhr.getResponseHeader("content-type") || "";
+//                                if(ct.indexOf('json')> -1){
+//                                    var e = JSON.parse(xhr.responseText);
+//                                    if(e != undefined && e.result !=undefined){
+//                                        $('#notify-content').text(e.message);
+//                                        $('.alert-message').addClass('success');
+//                                        $('#notify').fadeIn().fadeOut(1500);
+//                                    }
+//                                 }
+//                            }
+//);
             {/literal}
         
         </script>
