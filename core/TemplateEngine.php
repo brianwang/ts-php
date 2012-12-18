@@ -10,8 +10,10 @@
  *
  * @author brian
  */
-class TemplateEngine {
+abstract class TemplateEngine {
     //put your code here
+    abstract function display($tmpl='',$data=array());
+    abstract function render($tmpl='',$data=array());
 }
 
 ?>

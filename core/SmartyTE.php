@@ -30,12 +30,12 @@ class SmartyTE extends TemplateEngine {
         $this->smarty->setCacheDir(TMP_PATH . '/cache/');
     }
 
-    public function render($filename, $data = array()) {
+    public function render($filename='', $data = array()) {
         $this->smarty->assign($data);
         $this->smarty->display($filename);
     }
 
-    public function display($filename, $data = array()) {
+    public function display($filename='', $data = array()) {
         $this->smarty->assign($data);
         return $this->smarty->fetch($filename);
     }
